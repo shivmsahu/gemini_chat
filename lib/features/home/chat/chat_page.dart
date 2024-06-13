@@ -81,12 +81,20 @@ class _ChatPageState extends State<ChatPage> {
         body: Column(
           children: [
             Expanded(
-              child: ListView.builder(
-                  itemCount: chatList.length,
-                  reverse: true,
-                  itemBuilder: (_, index) {
-                    return ChatItemWidget(chatItem: chatList[index]);
-                  }),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: ListView.builder(
+                    itemCount: chatList.length,
+                    reverse: true,
+                    shrinkWrap: chatList.length < 10,
+                    //Assuming screen height can accommodate maximum 10 messages
+                    //shrinkWrap will be true only if there are less than 10 messages
+                    //because shrinkWrap true will build all message at once which can hamper performance
+                    //and will not provide any benefit for if there are than 10 message
+                    itemBuilder: (_, index) {
+                      return ChatItemWidget(chatItem: chatList[index]);
+                    }),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(10),
